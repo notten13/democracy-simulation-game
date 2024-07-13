@@ -1,35 +1,17 @@
 from simulation_objects import Indicator, Policy
-
-def propagate_change(start):
-  queue = [start]
-
-  while len(queue) > 0:
-    current = queue.pop(0)
-    for effect, weight in current.effects:
-      new_value = effect.value + effect.value * current.changeHistory[-1] * weight
-      if new_value < 0:
-        new_value = 0
-      effect.update_value(new_value)
-      queue.append(effect)
-
-def print_game_state(indicators, policies):
-  print('Indicators:')
-  for indicator in indicators:
-    print(f'{indicator.name}: {indicator.value}')
-  print('Policies:')
-  for policy in policies:
-    print(f'{policy.name}: {policy.value}')
+from propagate_change import propagate_change
+from display import print_game_state
 
 nhs_funding = Policy('NHS Funding', 100)
 tobacco_tax = Policy('Tobacco Tax', 100)
+policies = [nhs_funding, tobacco_tax]
+
 health = Indicator('Health', 100)
 unemployment = Indicator('Unemployment', 100)
 poverty = Indicator('Poverty', 100)
 tobacco_usage = Indicator('Tobacco Usage', 100)
 private_health_care = Indicator('Private Health Care', 100)
-
 indicators = [health, private_health_care, unemployment, poverty, tobacco_usage]
-policies = [nhs_funding, tobacco_tax]
 
 def define_influence(cause, effect, weight):
   # If effect is a policy, throw an error
