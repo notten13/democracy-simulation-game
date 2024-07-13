@@ -3,8 +3,8 @@ from propagate_change import propagate_change
 from display import print_game_state
 
 # Voter groups
-capitalists = VoterGroup('Capitalists', 0.45, 0.5, 0.7)
-socialists = VoterGroup('Socialists', 0.7, 0.65, 0.3)
+capitalists = VoterGroup('Capitalists', 0.5, 0.5, 0.7)
+socialists = VoterGroup('Socialists', 0.5, 0.5, 0.3)
 voter_groups = [capitalists, socialists]
 
 # Policies
@@ -27,8 +27,8 @@ define_influence(nhs_funding, poverty, -0.13)
 define_influence(tobacco_tax, tobacco_usage, -0.05)
 define_influence(tobacco_usage, health, -0.18)
 define_influence(nhs_funding, capitalists.happiness, -0.03)
-define_influence(nhs_funding, socialists.happiness, 0.3)
-define_influence(nhs_funding, socialists.membership, 0.03)
+define_influence(nhs_funding, socialists.happiness, 0.12)
+define_influence(nhs_funding, socialists.membership, 0.01)
 
 print_game_state(indicators, policies, voter_groups)
 print()
