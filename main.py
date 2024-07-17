@@ -6,13 +6,10 @@ from game_state import game_state
 print_game_state(game_state)
 print()
 
-nhs_funding = game_state['policies']['nhs_funding']
-nhs_funding.update_value(200)
+state_health_service = game_state['policies']['state_health_service']
+state_health_service.level.update_value(0.7)
 
-tobacco_tax = game_state['policies']['tobacco_tax']
-tobacco_tax.update_value(200)
-
-propagate_change(nhs_funding)
-propagate_change(tobacco_tax)
+propagate_change(state_health_service.level)
 
 print_game_state(game_state)
+print()
