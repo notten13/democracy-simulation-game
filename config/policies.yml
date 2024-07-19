@@ -1,0 +1,15 @@
+policies:
+  national_health_service:
+    name: National Health Service
+    description: A national health service that provides free healthcare to all citizens.
+    min_value: 0
+    max_value: 1
+    default_value: 0.5
+    cost:
+      min: 0
+      max: 6000
+      formula: 'x'
+    income:
+      min: 0
+      max: 0
+      formula: '0'

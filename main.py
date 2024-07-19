@@ -1,15 +1,42 @@
 
-from propagate_change import propagate_change
-from display import print_game_state
-from game_state import game_state
+from indicator import Indicator
+from policy import Policy
+import yaml
 
-print_game_state(game_state)
-print()
+def read_yaml_file(file_path):
+  with open(file_path, 'r') as file:
+    data = yaml.safe_load(file)
+  return data
 
-state_health_service = game_state['policies']['state_health_service']
-state_health_service.level.update_value(0.7)
+indicatorsConfig = read_yaml_file('config/indicators.yml')
+policiesConfig = read_yaml_file('config/policies.yml')
 
-propagate_change(state_health_service.level)
+indicators = {}
+for key, value in indicatorsConfig['indicators'].items():
+  indicators[key] = Indicator(
+    key,
+    value['name'],
+    value['description'],
+    value['min_value'],
+    value['max_value'],
+    value['default_value']
+)
 
-print_game_state(game_state)
-print()
+policies = {}
+for key, value in policiesConfig['policies'].items():
+  policies[key] = Policy(
+    key,
+    value['name'],
+    value['description'],
+    value['min_value'],
+    value['max_value'],
+    value['default_value'],
+    value['cost']['min'],
+    value['cost']['max'],
+    value['cost']['formula'],
+    value['income']['min'],
+    value['income']['max'],
+    value['income']['formula']
+)
+
+print(policies)

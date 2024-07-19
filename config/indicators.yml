@@ -1,0 +1,46 @@
+indicators:
+  gdp:
+    name: GDP
+    description: The Gross Domestic Product (GDP) is the total value of goods produced and services provided in a country during one year.
+    min_value: 0
+    max_value: 1
+    default_value: 0.6
+    causes:
+      - name: global_economy
+        formula: '0.12*x'
+        inertia: 1
+      - name: tourism
+        formula: '0.08*x'
+        inertia: 0
+      - name: productivity
+        formula: '0.3*x'
+        inertia: 0
+
+  health:
+    name: Health
+    description: A general indicator of the health of our citizens.
+    min_value: 0
+    max_value: 1
+    default_value: 0.5
+    causes:
+      - name: national_health_service
+        formula: '0.1*x'
+        inertia: 4
+
+  productivity:
+    name: Productivity
+    description: The average output of every worker in terms of services and goods produced.
+    min_value: 0
+    max_value: 1
+    default_value: 0.5
+    causes:
+      - name: health
+        formula: '-0.15+0.15*x'
+        inertia: 0
+
+  tourism:
+    name: Tourism
+    description: The number of tourists visiting the country.
+    min_value: 0
+    max_value: 1
+    default_value: 0.5
