@@ -1,6 +1,7 @@
 
 from indicator import Indicator
 from policy import Policy
+from voter_group import VoterGroup
 from display import display_game_state
 from propagate_changes import propagate_changes
 import yaml
@@ -11,11 +12,12 @@ def read_yaml_file(file_path):
     data = yaml.safe_load(file)
   return data
 
-indicatorsConfig = read_yaml_file('config/indicators.yml')
-policiesConfig = read_yaml_file('config/policies.yml')
+indicators_config = read_yaml_file('config/indicators.yml')
+policies_config = read_yaml_file('config/policies.yml')
+voter_groups_config = read_yaml_file('config/voter_groups.yml')
 
 indicators = {}
-for key, value in indicatorsConfig['indicators'].items():
+for key, value in indicators_config['indicators'].items():
   indicators[key] = Indicator(
     key,
     value['name'],
@@ -27,7 +29,7 @@ for key, value in indicatorsConfig['indicators'].items():
 )
 
 policies = {}
-for key, value in policiesConfig['policies'].items():
+for key, value in policies_config['policies'].items():
   policies[key] = Policy(
     key,
     value['name'],
@@ -43,6 +45,17 @@ for key, value in policiesConfig['policies'].items():
     value['income']['formula']
 )
 
+voter_groups = {}
+for key, value in voter_groups_config['voter_groups'].items():
+  voter_groups[key] = VoterGroup(
+    key,
+    value['name'],
+    value['description'],
+    value['default_membership'],
+    value['default_happiness'],
+    value['happiness_causes']
+)
+
 G = nx.DiGraph()
 
 for key, value in indicators.items():
@@ -51,18 +64,30 @@ for key, value in indicators.items():
 for key, value in policies.items():
   G.add_node(value)
 
+for key, value in voter_groups.items():
+  G.add_node(value.membership)
+  G.add_node(value.happiness)
+
 for key, value in indicators.items():
   for cause in value.causes:
     # Find node by key in graph
     cause_node = indicators[cause['key']] if cause['key'] in indicators else policies[cause['key']]
     G.add_edge(cause_node, value, formula=cause['formula'], inertia=cause['inertia'])
 
+for key, value in voter_groups.items():
+  for cause in value.happiness.causes:
+    cause_node = indicators[cause['key']] if cause['key'] in indicators else policies[cause['key']]
+    G.add_edge(cause_node, value.happiness, formula=cause['formula'], inertia=cause['inertia'])
+  for cause in value.membership.causes:
+    cause_node = indicators[cause['key']] if cause['key'] in indicators else policies[cause['key']]
+    G.add_edge(cause_node, value.membership, formula=cause['formula'], inertia=cause['inertia'])
+
 propagate_changes(G)
 
 print('====================================')
 print('======== Initial game state ========')
 print('====================================\n')
-display_game_state(indicators, policies)
+display_game_state(indicators, policies, voter_groups)
 print()
 
 max_turns = 5
@@ -92,7 +117,7 @@ while current_turn < max_turns:
       print('Done!\n')
 
   propagate_changes(G)
-  display_game_state(indicators, policies)
+  display_game_state(indicators, policies, voter_groups)
   print()
   
 print('Game over!')

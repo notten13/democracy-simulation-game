@@ -1,5 +1,6 @@
 import networkx as nx
 from indicator import Indicator
+from policy import Policy
 
 def propagate_changes(G):
   try:
@@ -8,7 +9,9 @@ def propagate_changes(G):
     print("Could not find a valid topological order, check there is no cycle in the graph")
 
   for node in topological_order:
-    if isinstance(node, Indicator):
+    if isinstance(node, Policy):
+      continue
+    else:
       updated_value = node.default_value
       for pred in G.predecessors(node):
         formula = G[pred][node]['formula']

@@ -1,0 +1,36 @@
+voter_groups:
+  capitalists:
+    name: Capitalists
+    description: Mostly business owners and high earners, but in general, people who value private enterprise and free markets. They believe in low taxes and minimal government intervention in the economy, allowing hard-working people to benefit from their labour.
+    default_membership: 0.2
+    default_happiness: 0.5
+    happiness_causes:
+      - key: income_tax
+        formula: '-0.1*x'
+        inertia: 0
+      - key: national_health_service
+        formula: '-0.1*x'
+        inertia: 0
+      - key: petrol_tax
+        formula: '-0.1*x'
+        inertia: 0
+  
+  socialists:
+    name: Socialists
+    description: Socialists primarily value equality and social justice. They believe in redistribution of wealth from the rich to the poor to counteract the inequality that arises from a free market.
+    default_membership: 0.7
+    default_happiness: 0.5
+    happiness_causes:
+      - key: national_health_service
+        formula: '0.1*x'
+        inertia: 0
+
+  liberals:
+    name: Liberals
+    description: A complex group to define, but liberal generally value personal liberty, freedom, the respect of individual choice... They strongly oppose state surveillance.
+    default_membership: 0.5
+    default_happiness: 0.5
+    happiness_causes:
+      - key: police_force
+        formula: '-0.1*x'
+        inertia: 0
