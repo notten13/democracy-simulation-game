@@ -1,0 +1,94 @@
+indicators:
+  car_usage:
+    name: Car Usage
+    description: The percentage of people who use cars as their primary mode of transportation.
+    min_value: 0
+    max_value: 1
+    default_value: 0.55
+    causes:
+      - key: gdp
+        formula: '0.55*(x**1.59)'
+        inertia: 0
+      - key: petrol_tax
+        formula: '-0.4*x'
+        inertia: 0
+
+  crime_rate:
+    name: Crime Rate
+    description: The level of crime in the country.
+    min_value: 0
+    max_value: 1
+    default_value: 0.7
+    causes:
+      - key: police_force
+        formula: '-0.3*(x**0.6)'
+        inertia: 6
+
+  environment:
+    name: The Environment
+    description: A general measurement of the environment in the country, including air pollution, littering, water pollution, etc.
+    min_value: 0
+    max_value: 1
+    default_value: 0.5
+    causes:
+      - key: recycling
+        formula: '0.1*x'
+        inertia: 0
+      - key: car_usage
+        formula: '-0.22*x'
+        inertia: 0
+
+  gdp:
+    name: GDP
+    description: The Gross Domestic Product (GDP) is the total value of goods produced and services provided in a country during one year.
+    min_value: 0
+    max_value: 1
+    default_value: 0.6
+    causes:
+      - key: global_economy
+        formula: '0.12*x'
+        inertia: 1
+      - key: tourism
+        formula: '0.08*x'
+        inertia: 0
+      - key: productivity
+        formula: '0.3*x'
+        inertia: 0
+
+  global_economy:
+    name: Global economy
+    description: The state of the global economy (global boom or recession). This is mostly outside our control, and is usually cyclical.
+    min_value: 0
+    max_value: 1
+    default_value: 0.6
+    causes: []
+
+  health:
+    name: Health
+    description: A general indicator of the health of our citizens.
+    min_value: 0
+    max_value: 1
+    default_value: 0.5
+    causes:
+      - key: national_health_service
+        formula: '0.1*x'
+        inertia: 4
+
+  productivity:
+    name: Productivity
+    description: The average output of every worker in terms of services and goods produced.
+    min_value: 0
+    max_value: 1
+    default_value: 0.5
+    causes:
+      - key: health
+        formula: '-0.15+0.15*x'
+        inertia: 0
+
+  tourism:
+    name: Tourism
+    description: The number of tourists visiting the country.
+    min_value: 0
+    max_value: 1
+    default_value: 0.5
+    causes: []
