@@ -13,5 +13,5 @@ def propagate_changes(G):
       for pred in G.predecessors(node):
         formula = G[pred][node]['formula']
         effect = eval(formula, {}, { 'x': pred.value})
-        updated_value += effect
+        updated_value = updated_value + updated_value * effect
       node.set_value(updated_value)

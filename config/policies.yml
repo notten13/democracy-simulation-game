@@ -1,4 +1,19 @@
 policies:
+  income_tax:
+    name: Income Tax
+    description: A tax on income that is paid by individuals and businesses.
+    min_value: 0
+    max_value: 1
+    default_value: 0.3
+    cost:
+      min: 0
+      max: 0
+      formula: '0'
+    income:
+      min: 0
+      max: 30000
+      formula: 'x'
+
   national_health_service:
     name: National Health Service
     description: A national health service that provides free healthcare to all citizens.
@@ -8,6 +23,66 @@ policies:
     cost:
       min: 0
       max: 6000
+      formula: 'x'
+    income:
+      min: 0
+      max: 0
+      formula: '0'
+
+  petrol_tax:
+    name: Petrol Tax
+    description: A tax on petrol that is paid by drivers.
+    min_value: 0
+    max_value: 1
+    default_value: 0.6
+    cost:
+      min: 0
+      max: 0
+      formula: '0'
+    income:
+      min: 0
+      max: 1000
+      formula: 'x'
+
+  police_force:
+    name: Police Force
+    description: A police force that maintains law and order in the country.
+    min_value: 0
+    max_value: 1
+    default_value: 0.5
+    cost:
+      min: 0
+      max: 600
+      formula: 'x'
+    income:
+      min: 0
+      max: 0
+      formula: '0'
+
+  recycling:
+    name: Recycling
+    description: A recycling program that encourages citizens to recycle.
+    min_value: 0
+    max_value: 1
+    default_value: 0.4
+    cost:
+      min: 0
+      max: 800
+      formula: 'x'
+    income:
+      min: 0
+      max: 0
+      formula: '0'
+
+  state_pensions:
+    name: State Pensions
+    description: A state pension system that provides financial support to retired citizens.
+    min_value: 0
+    max_value: 1
+    default_value: 0.5
+    cost:
+      min: 0
+      max: 4000
       formula: 'x'
     income:
       min: 0

@@ -1,8 +1,7 @@
 # Democracy simulation game
 
-Refactor TODO list:
-- [ ] Import policies and indicators from config files for simplicity
-- [ ] Create the graph
-- [ ] Topological ordering
-- [ ] Propagate change logic
-- [ ] Add voter groups
+TODO:
+- [ ] Policy cost and income, and overall budget
+- [ ] Voter groups, popularity and re-election logic
+- [ ] Add more policies and indicators
+- [ ] Implement policy inertia
