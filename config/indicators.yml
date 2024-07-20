@@ -6,15 +6,23 @@ indicators:
     max_value: 1
     default_value: 0.6
     causes:
-      - name: global_economy
+      - key: global_economy
         formula: '0.12*x'
         inertia: 1
-      - name: tourism
+      - key: tourism
         formula: '0.08*x'
         inertia: 0
-      - name: productivity
+      - key: productivity
         formula: '0.3*x'
         inertia: 0
+
+  global_economy:
+    name: Global economy
+    description: The state of the global economy (global boom or recession). This is mostly outside our control, and is usually cyclical.
+    min_value: 0
+    max_value: 1
+    default_value: 0.6
+    causes: []
 
   health:
     name: Health
@@ -23,7 +31,7 @@ indicators:
     max_value: 1
     default_value: 0.5
     causes:
-      - name: national_health_service
+      - key: national_health_service
         formula: '0.1*x'
         inertia: 4
 
@@ -34,7 +42,7 @@ indicators:
     max_value: 1
     default_value: 0.5
     causes:
-      - name: health
+      - key: health
         formula: '-0.15+0.15*x'
         inertia: 0
 
@@ -44,3 +52,4 @@ indicators:
     min_value: 0
     max_value: 1
     default_value: 0.5
+    causes: []

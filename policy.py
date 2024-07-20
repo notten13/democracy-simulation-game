@@ -13,3 +13,7 @@ class Policy:
     self.min_income = min_income
     self.max_income = max_income
     self.income_formula = income_formula
+
+  
+  def __repr__(self):
+    return '[Policy] ' + self.key
