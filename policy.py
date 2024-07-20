@@ -14,6 +14,13 @@ class Policy:
     self.max_income = max_income
     self.income_formula = income_formula
 
-  
   def __repr__(self):
     return '[Policy] ' + self.key
+
+  def set_value(self, value):
+    if (value < self.min_value):
+      self.value = self.min_value
+    elif (value > self.max_value):
+      self.value = self.max_value
+    else:
+      self.value = value

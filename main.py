@@ -2,6 +2,7 @@
 from indicator import Indicator
 from policy import Policy
 from display import display_game_state
+from propagate_changes import propagate_changes
 import yaml
 import networkx as nx
 
@@ -56,18 +57,42 @@ for key, value in indicators.items():
     cause_node = indicators[cause['key']] if cause['key'] in indicators else policies[cause['key']]
     G.add_edge(cause_node, value, formula=cause['formula'], inertia=cause['inertia'])
 
-try:
-  topological_order = list(nx.topological_sort(G))
-except nx.NetworkXUnfeasible:
-  print("Could not find a valid topological order, check there is no cycle in the graph")
+propagate_changes(G)
 
-for node in topological_order:
-  if isinstance(node, Indicator):
-    updated_value = node.default_value
-    for pred in G.predecessors(node):
-      formula = G[pred][node]['formula']
-      effect = eval(formula, {}, { 'x': pred.value})
-      updated_value += effect
-    node.set_value(updated_value)
-
+print('====================================')
+print('======== Initial game state ========')
+print('====================================\n')
 display_game_state(indicators, policies)
+print()
+
+max_turns = 5
+current_turn = 0
+
+while current_turn < max_turns:
+  current_turn += 1
+  print(f'========================')
+  print(f'======== Turn {current_turn} ========')
+  print(f'========================\n')
+
+  user_action = None
+  while user_action != 0:
+    print('What would you like to do?')
+    print('0. End turn')
+    print('1. Change a policy')
+    user_action = int(input('Enter your choice: '))
+    if user_action == 1:
+      print('\nWhat policy would you like to change?')
+      for i, policy in enumerate(policies.values()):
+        print(f'{i + 1}. {policy.name}')
+      policy_choice = int(input('Enter your choice: '))
+      policy = list(policies.values())[policy_choice - 1]
+      print(f'\nWhat level would you like to set {policy.name} to (between 0 and 1)?')
+      level = float(input('Enter your choice: '))
+      policy.set_value(level)
+      print('Done!\n')
+
+  propagate_changes(G)
+  display_game_state(indicators, policies)
+  print()
+  
+print('Game over!')
